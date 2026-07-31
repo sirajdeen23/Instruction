@@ -47,9 +47,16 @@ Method B:
 Manual Setup SOP (Step-by-Step for Technicians)Best for: Non-domain PCs without automated tools.Create Directory:Create a folder at C:\ProgramData\LogonNotice\.Save Batch File:Save LaunchNotice.bat inside C:\ProgramData\LogonNotice\ with this content:DOS
 ----------------------------------------------------------------
 @echo off
+:: Set the local path where the file will be temporarily saved
 set "LOCAL_FILE=%temp%\notice.hta"
+
+:: Your specific GitHub Raw URL
 set "GITHUB_URL=https://raw.githubusercontent.com/sirajdeen23/Instruction/refs/heads/main/notice.hta"
+
+:: Pull the latest version from GitHub using PowerShell
 powershell -Command "Invoke-WebRequest -Uri '%GITHUB_URL%' -OutFile '%LOCAL_FILE%'"
+
+:: Launch the HTA file
 start mshta.exe "%LOCAL_FILE%"
 
 ------------------------------------------------------------------------------------------------
