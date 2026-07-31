@@ -1,43 +1,43 @@
 Standard Operating Procedure (SOP)Centralized Deployment Guide: 
-GitHub Logon Notice AppThis document outlines how to deploy the automated GitHub logon notice screen across multiple Windows machines in an organization or multi-user environment.1. Overview & ArchitectureSource File: [https://raw.githubusercontent.com/sirajdeen23/Instruction/refs/heads/main/notice.hta](https://raw.githubusercontent.com/sirajdeen23/Instruction/refs/heads/main/notice.hta)Local Storage Path: C:\ProgramData\LogonNotice\LaunchNotice.batTrigger: Windows Logon Event (Task Scheduler)Execution Flow: User logs on $\rightarrow$ Task Scheduler triggers batch file $\rightarrow$ Script downloads latest notice.hta from GitHub to %temp% $\rightarrow$ Launches via mshta.exe.2. Deployment MethodsChoose the deployment method that fits your network environment:Method A: One-Click PowerShell Deployment (Recommended)Best for: Manual setup across multiple PCs, or deployment via RMM / remote administration tools.Run this single PowerShell command as Administrator on each target machine. It automatically creates the necessary folder, builds the batch script with your GitHub URL, and registers the scheduled task for all users.
 
-PowerShell
-# Run in PowerShell as Administrator
-
-(# 1. Define paths and GitHub URL
-$dirPath = "C:\ProgramData\LogonNotice"
+Automatic
+---------------------------------------------------------------------------
+(
+# 1. Define path in the user's personal AppData folder (No Admin required)
+$dirPath = "$env:LOCALAPPDATA\LogonNotice"
 $batPath = "$dirPath\LaunchNotice.bat"
-$githubUrl = "https://raw.githubusercontent.com/sirajdeen23/Instruction/refs/heads/main/notice.hta"
 
-# 2. Create local program directory
+# 2. Create the folder if it doesn't exist
 if (!(Test-Path $dirPath)) {
     New-Item -ItemType Directory -Force -Path $dirPath | Out-Null
 }
 
-# 3. Write the batch file content
+# 3. Create the batch file
 $batContent = @"
 @echo off
 set "LOCAL_FILE=%temp%\notice.hta"
-set "GITHUB_URL=$githubUrl"
+set "GITHUB_URL=https://raw.githubusercontent.com/sirajdeen23/Instruction/refs/heads/main/notice.hta"
 
-:: Download latest HTA from GitHub
-powershell -Command "Invoke-WebRequest -Uri '%GITHUB_URL%' -OutFile '%LOCAL_FILE%'"
+:: Added -UseBasicParsing to prevent PowerShell from freezing
+powershell -Command "Invoke-WebRequest -Uri '%GITHUB_URL%' -OutFile '%LOCAL_FILE%' -UseBasicParsing"
 
-:: Launch the HTA window
 start mshta.exe "%LOCAL_FILE%"
 "@
 
 Set-Content -Path $batPath -Value $batContent -Encoding ASCII
 
-# 4. Create Task Scheduler task for ALL users logging onto the machine
+# 4. Create and register the Task Scheduler task for the CURRENT USER only
 $taskName = "GitHub Logon Notice"
+
 $action = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c `"$batPath`""
 $trigger = New-ScheduledTaskTrigger -AtLogOn
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 
-Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Settings $settings -User "Users" -Force | Out-Null
+# Registers the task specifically for the currently logged-in user
+Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Settings $settings -User $env:USERNAME -Force | Out-Null
 
-Write-Host "Deployment completed successfully for task: $taskName" -ForegroundColor Green)
+Write-Host "Setup Complete! Installed for the current user without Admin rights." -ForegroundColor Green
+)
 
 ---------------------------------------------------------
 
