@@ -1,11 +1,14 @@
 <html>
 <head>
-<title>System Notification</title>
+<title>Apollo Notification</title>
 
-<!-- The HTA:APPLICATION tag is what turns this from a standard webpage into a Windows application -->
+<!-- This meta tag forces Windows to use modern scaling, fixing the shrink issue -->
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <HTA:APPLICATION 
     ID="objWelcome" 
-    APPLICATIONNAME="LogonPopup" 
+    APPLICATIONNAME="ApolloKnowledge_Info" 
     SCROLL="no" 
     SINGLEINSTANCE="yes" 
     WINDOWSTATE="normal"
@@ -15,9 +18,9 @@
     BORDER="dialog">
 
 <script>
-    // Set the window size (Width, Height)
-    var windowWidth = 550;
-    var windowHeight = 350;
+    // Increased the base window size for modern screens
+    var windowWidth = 650;
+    var windowHeight = 450;
     window.resizeTo(windowWidth, windowHeight);
 
     // Calculate the center of the screen and move the popup there
@@ -40,22 +43,22 @@
         background-color: #0078D7;
         color: white;
         padding: 15px;
-        font-size: 20px;
+        font-size: 24px;
         font-weight: bold;
     }
     .content { 
         padding: 30px 40px; 
-        font-size: 15px; 
+        font-size: 18px; 
         line-height: 1.6; 
     }
     button { 
-        padding: 10px 30px; 
+        padding: 12px 35px; 
         background-color: #0078D7; 
         color: white; 
         border: none; 
-        font-size: 14px;
+        font-size: 16px;
         cursor: pointer; 
-        margin-top: 10px;
+        margin-top: 15px;
     }
     button:hover { 
         background-color: #005a9e; 
