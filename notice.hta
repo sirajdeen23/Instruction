@@ -1,8 +1,8 @@
 <html>
 <head>
-<title>Apollo Notification</title>
+<title>Apollo Knowledge Notification</title>
 
-<!-- This meta tag forces Windows to use modern scaling, fixing the shrink issue -->
+<!-- Forces Windows to use modern scaling -->
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18,64 +18,151 @@
     BORDER="dialog">
 
 <script>
-    // Increased the base window size for modern screens
-    var windowWidth = 650;
-    var windowHeight = 450;
+    // Increased window size for the new layout and FAQ content
+    var windowWidth = 700;
+    var windowHeight = 550;
     window.resizeTo(windowWidth, windowHeight);
 
-    // Calculate the center of the screen and move the popup there
+    // Calculate center of the screen
     var xPos = (screen.width - windowWidth) / 2;
     var yPos = (screen.height - windowHeight) / 2;
     window.moveTo(xPos, yPos);
 </script>
 
 <style>
+    :root {
+        --apollo-teal: #11809F;
+        --apollo-green: #84B04C;
+        --apollo-gold: #F5B62A;
+    }
+
     body { 
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        background-color: #f3f3f3; 
+        background-color: #f8f9fa; 
         color: #333;
         padding: 0; 
         margin: 0;
-        text-align: center; 
-        border: 2px solid #0078D7;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-top: 5px solid #11809F;
+        border-bottom: 5px solid #84B04C;
     }
-    .header {
-        background-color: #0078D7;
-        color: white;
-        padding: 15px;
-        font-size: 24px;
-        font-weight: bold;
+
+    .container {
+        background: #ffffff;
+        width: 100%;
+        max-width: 600px;
+        margin-top: 20px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        border-radius: 8px;
+        text-align: center;
+        box-sizing: border-box;
     }
+
+    .logo-container {
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        max-width: 250px;
+        height: auto;
+    }
+
+    .header-title {
+        color: #11809F;
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .divider {
+        height: 3px;
+        width: 50px;
+        background-color: #F5B62A;
+        margin: 0 auto 20px auto;
+        border-radius: 2px;
+    }
+
     .content { 
-        padding: 30px 40px; 
-        font-size: 18px; 
-        line-height: 1.6; 
+        font-size: 15px; 
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 25px;
     }
+
+    .faq-box {
+        background-color: #f1f8f9;
+        border-left: 4px solid #84B04C;
+        padding: 15px;
+        text-align: left;
+        margin-bottom: 25px;
+        border-radius: 0 4px 4px 0;
+    }
+
+    .faq-title {
+        color: #11809F;
+        font-weight: bold;
+        margin-top: 0;
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+
+    .faq-q {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 4px;
+    }
+
+    .faq-a {
+        margin-top: 0;
+        font-size: 14px;
+    }
+
     button { 
-        padding: 12px 35px; 
-        background-color: #0078D7; 
+        padding: 12px 40px; 
+        background-color: #11809F; 
         color: white; 
         border: none; 
-        font-size: 16px;
+        border-radius: 25px;
+        font-size: 15px;
+        font-weight: bold;
         cursor: pointer; 
-        margin-top: 15px;
+        transition: background-color 0.3s ease;
     }
+
     button:hover { 
-        background-color: #005a9e; 
+        background-color: #0c6179; 
     }
 </style>
 </head>
 <body>
     
-    <div class="header">
-        Daily Announcement
-    </div>
+    <div class="container">
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <img src="edited-image.png" alt="Apollo Knowledge Logo" class="logo">
+        </div>
 
-    <div class="content">
-        <p>Welcome to the network.</p>
-        <p>This message is being pulled live from your GitHub repository. You can update this text in GitHub, and it will change here on the next logon without touching the local PC.</p>
+        <div class="header-title">Daily Network Announcement</div>
+        <div class="divider"></div>
+
+        <div class="content">
+            <p>Welcome to the Apollo Knowledge network.</p>
+            <p>This message is synced dynamically. Important updates, maintenance schedules, and daily briefings will appear here automatically upon logon.</p>
+        </div>
+
+        <!-- IT FAQ Section -->
+        <div class="faq-box">
+            <p class="faq-title">IT Quick Tip of the Day</p>
+            <p class="faq-q">Q: How do I refresh my Windows Group Policy if I am missing a network printer or mapped drive?</p>
+            <p class="faq-a">A: Press the Windows Key, type <strong>cmd</strong>, and press Enter. In the command prompt, type <code>gpupdate /force</code> and hit Enter. Once it says "Computer Policy update has completed successfully," restart your PC if prompted.</p>
+        </div>
         
-        <button onclick="window.close()">I Understand</button>
+        <button onclick="window.close()">Acknowledge & Continue</button>
     </div>
 
 </body>
