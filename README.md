@@ -40,10 +40,9 @@ Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Se
 Write-Host "Deployment completed successfully for task: $taskName" -ForegroundColor Green)
 
 ---------------------------------------------------------
-Method B: Group Policy Object (GPO) DeploymentBest for: Active Directory Domain networks (Deploying to hundreds of domain-joined PCs).Open Group Policy Management (gpmc.msc) on your Domain Controller.Edit an existing GPO or create a new one targeted at your computers/users.Navigate to: Computer Configuration $\rightarrow$ Preferences $\rightarrow$ Control Panel Settings $\rightarrow$ Scheduled Tasks.Right-click $\rightarrow$ New $\rightarrow$ Scheduled Task (At least Windows 7).Configure the following settings:Action: CreateName: GitHub Logon NoticeUser Account: NT AUTHORITY\Authenticated Users (or run under current user logon)Triggers Tab: New Trigger $\rightarrow$ At log on $\rightarrow$ Any user.Actions Tab: New Action $\rightarrow$ Start a program:Program/script: powershell.exeAdd arguments: -WindowStyle Hidden -Command "Invoke-WebRequest -Uri '[https://raw.githubusercontent.com/sirajdeen23/Instruction/refs/heads/main/notice.hta](https://raw.githubusercontent.com/sirajdeen23/Instruction/refs/heads/main/notice.hta)' -OutFile '$env:TEMP\notice.hta'; start mshta.exe '$env:TEMP\notice.hta'"Apply the GPO to the target Organizational Unit (OU).
 
 
-Method C:
+Method B:
 
 Manual Setup SOP (Step-by-Step for Technicians)Best for: Non-domain PCs without automated tools.Create Directory:Create a folder at C:\ProgramData\LogonNotice\.Save Batch File:Save LaunchNotice.bat inside C:\ProgramData\LogonNotice\ with this content:DOS
 ----------------------------------------------------------------
