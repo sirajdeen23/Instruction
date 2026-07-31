@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Organization Notice</title>
+<HTA:APPLICATION
+    ID="orgNotice"
+    APPLICATIONNAME="Organization Notice"
+    BORDER="dialog"
+    CAPTION="yes"
+    SHOWINTASKBAR="yes"
+    SINGLEINSTANCE="yes"
+    SYSMENU="no"
+    MAXIMIZEBUTTON="no"
+    MINIMIZEBUTTON="no"
+    SCROLL="no"
+    ICON="#"
+/>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: #f4f6f8;
+        color: #1a1a1a;
+    }
+    .notice-box {
+        background: #ffffff;
+        padding: 20px 24px;
+        box-sizing: border-box;
+    }
+    .header {
+        display: flex;
+        align-items: center;
+        border-bottom: 2px solid #0078D4;
+        padding-bottom: 12px;
+        margin-bottom: 16px;
+    }
+    .header h1 {
+        font-size: 18px;
+        color: #0078D4;
+        margin: 0;
+    }
+    .content {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+    .content ul {
+        padding-left: 18px;
+        margin: 10px 0;
+    }
+    .footer {
+        text-align: right;
+    }
+    button {
+        background-color: #0078D4;
+        color: white;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #005a9e;
+    }
+    .updated {
+        font-size: 11px;
+        color: #888;
+        margin-top: 14px;
+    }
+</style>
+<script>
+    window.resizeTo(520, 520);
+    function centerWindow() {
+        window.moveTo((screen.width - 520) / 2, (screen.height - 520) / 2);
+    }
+    window.onload = centerWindow;
+    function closeNotice() {
+        window.close();
+    }
+</script>
+</head>
+<body>
+    <div class="notice-box">
+        <div class="header">
+            <h1>Apollo Knowledge Ventures Limitted</h1>
+        </div>
+	<h2>Organization Instruction</h2>
+        <div class="content">
+            <p>Welcome. Please read the following before using this system:</p>
+            <ul>
+                <li>This device is the property of the Organization and is provided for authorized business use only.</li>
+                <li>All activity on this device may be monitored, logged, and recorded for security purposes.</li>
+                <li>Do not store personal or sensitive data outside approved company folders.</li>
+                <li>Report any suspicious activity, phishing emails, or security concerns to the IT Security team immediately.</li>
+            </ul>
+            <p>By continuing to use this device, you acknowledge and agree to the organization's IT Security Policy.</p>
+        </div>
+        <div class="footer">
+            <button onclick="closeNotice()">I Understand</button>
+        </div>
+        <div class="updated">Last updated: <span id="date"></span></div>
+    </div>
+    <script>
+        document.getElementById("date").innerText = new Date().toLocaleDateString();
+    </script>
+</body>
+</html>
